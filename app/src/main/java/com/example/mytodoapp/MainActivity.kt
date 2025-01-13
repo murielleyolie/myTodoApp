@@ -15,20 +15,23 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
+    //mon tableau de tache
+    var taskList : MutableList<Task> = mutableListOf()
 
-        var taskList : MutableList<Task> = mutableListOf()
     companion object{
         private const val TASK_LIST_KEY = "taskList"}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-
+        //utiliser pour restaurer l'etat de l'activite
         if(savedInstanceState != null)
         {
             taskList = savedInstanceState.getParcelableArrayList<Task>(TASK_LIST_KEY)?.toMutableList()!!
         }
+        //verifie si l'activite a ete demarrer avec un intent
         if (intent != null) {
             val task = Task(intent.getStringExtra("EXTRA_TITLE" )?: "",intent.getStringExtra("EXTRA_DESC") ?: "")
             taskList.add(task)
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
-
+    //utiliser pour enregister l'etat de l'activite
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelableArrayList(TASK_LIST_KEY, ArrayList(taskList))
         super.onSaveInstanceState(outState)
@@ -57,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         val listViewtask = findViewById<ListView>(R.id.listView)
         val adapter = TaskAdapter(this,R.layout.activity_item_task,taskList)
+        //utiliser pour informer l'adapteur de la modification du tableau
         adapter.notifyDataSetChanged()
         listViewtask.adapter = adapter
     }

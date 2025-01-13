@@ -42,10 +42,12 @@ class addTaskActivity : AppCompatActivity() {
                 finish()
             }else{
                 error.text = "Veuillez entrez toutes les informations"
+                //utiliser pour rendre le TextView visible
                 error.visibility = View.VISIBLE
             }
         }
         btnCancel.setOnClickListener {
+            //utiliser pour formater le type String en Editable
             val edittext = HtmlCompat.fromHtml("", HtmlCompat.FROM_HTML_MODE_LEGACY) as Editable?
             titleView.text = edittext
             descriptionView.text = edittext
